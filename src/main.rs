@@ -1,10 +1,10 @@
-use std::{ thread, time::Duration };
+use std::thread;
 
 fn main() {
-    let expensive_closure = |num: u32| -> u32 {
-        println!("calculating slowly...");
-        thread::sleep(Duration::from_secs(2));
-        num
-    };
-    println!("Result: {}", expensive_closure(5));
+    let list = vec![1, 2, 3];
+    println!("Before defining closure: {list:?}");
+
+    thread::spawn(move || println!("From thread: {list:?}")) 
+        .join()
+        .unwrap();
 }
