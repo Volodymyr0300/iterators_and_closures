@@ -1,4 +1,5 @@
 #[derive(Debug)]
+
 struct Rectangle {
     width: u32,
     height: u32,
@@ -11,6 +12,11 @@ fn main() {
         Rectangle { width: 7, height: 12 },
     ];
 
-    list.sort_by_key( |r| r.width );
-    println!("{list:#?}");
+    // list.sort_by_key( |r| r.width );
+    let mut num_sort_operations = 0;
+    list.sort_by_key( |r| {
+        num_sort_operations += 1;
+        r.width
+    });
+    println!("{list:#?}, sorted in {num_sort_operations} operations");
 }
