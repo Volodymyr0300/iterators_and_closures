@@ -1,22 +1,12 @@
-#[derive(Debug)]
-
-struct Rectangle {
-    width: u32,
-    height: u32,
-}
+fn call_fn_once<F: FnOnce()>(f: F) { f(); }
+fn call_fn_mut<F: FnMut()>(mut f: F) { f(); }
+fn call_fn<F: Fn()>(f: F) { f(); }
 
 fn main() {
-    let mut list = [
-        Rectangle { width: 10, height: 1 },
-        Rectangle { width: 3, height: 5 },
-        Rectangle { width: 7, height: 12 },
-    ];
+    let name = String::from("Rust");
 
-    // list.sort_by_key( |r| r.width );
-    let mut num_sort_operations = 0;
-    list.sort_by_key( |r| {
-        num_sort_operations += 1;
-        r.width
-    });
-    println!("{list:#?}, sorted in {num_sort_operations} operations");
+    let say_hi = || println!("Hi, {}", name); // Fn
+    call_fn(say_hi);      // ok
+    call_fn_mut(say_hi);  // ok — Fn is also FnMut
+    call_fn_once(say_hi); // ok — Fn is also FnOnce
 }
